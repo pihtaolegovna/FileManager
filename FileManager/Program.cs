@@ -22,9 +22,10 @@ namespace FileManager
         static string backpath;
         static void Main(string[] args)
         {
-            Console.SetCursorPosition(0, 60);
-            Console.WriteLine("2 to go back. D to delete, A to make file, f to create directory");
+            Console.SetCursorPosition(0, 10);
+            Console.Write("2 to go back. D to delete, A to make file, f to create directory");
             Console.CursorVisible = false;
+            Console.SetCursorPosition(0, 0);
             drivelist();
         }
         public static void arrows(int amount)
@@ -59,9 +60,9 @@ namespace FileManager
                         catch (Exception)
                         {
                             Console.Clear();
-                            currentpath = currentpath + "/";
-                            string filepath = currentpath + foptions[famount];
-                            Console.WriteLine(filepath);
+                            string filepath = currentpath;
+                            Console.ReadKey();
+                            Process.Start(filepath);
                             Thread.Sleep(10000);
                             Console.ReadKey();
                         }
@@ -160,10 +161,10 @@ namespace FileManager
             {
                 if (d.IsReady == true)
                 {
+                    string bar = "";
                     double condition = 0;
                     condition = Convert.ToDouble(d.TotalFreeSpace) / Convert.ToDouble(d.TotalSize);
                     condition = (Math.Round(condition, 1));
-                        string bar = "";
                         switch (condition)
                         {
                             case 0:
@@ -238,7 +239,7 @@ namespace FileManager
             foreach (string s in Directory.GetDirectories(folderpath))
             {
                 string folderout = (s.Remove(0, folderpath.Length));
-                Console.WriteLine("   {0}", slashremover(folderout));
+                Console.WriteLine($"   {slashremover(folderout)}    Folder");
                 options.Add(folderout);
                 damount++;
             }
@@ -246,7 +247,7 @@ namespace FileManager
             FileInfo[] Files = d.GetFiles();
             foreach (FileInfo file in Files)
             {
-                Console.WriteLine("   {0}", file.Name);
+                Console.WriteLine($"   {file.Name}    {file.CreationTime}");
                 options.Add(file.Name);
                 foptions.Add(file.Name);
                 famount++;
